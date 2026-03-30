@@ -1,0 +1,12 @@
+[project]
+name = "pomodoro-manager"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "ntt-vibekit",
+]
+
+[tool.uv.sources]
+ntt-vibekit = { path = "../ntt-vibekit", editable = true }
