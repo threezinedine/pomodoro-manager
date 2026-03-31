@@ -20,12 +20,14 @@
 
 - [ ] 3. Set up database and Prisma schema
     - [ ] 3.1. Initialize Prisma with MySQL (update schema provider to mysql)
-    - [ ] 3.2. Define User model (id, createdAt — reserved for future)
-    - [ ] 3.3. Define Project model (id, name, color, userId)
-    - [ ] 3.4. Define Task model (id, title, projectId, userId, date, completed)
-    - [ ] 3.5. Define PomodoroSession model (id, taskId, userId, startedAt, endedAt, durationMinutes)
-    - [ ] 3.6. Run Prisma migrations (connect to MySQL container)
-    - [ ] 3.7. Seed a predefined auth token into the DB
+    - [ ] 3.2. Define User model (id, createdAt — reserved for future, no deletedAt)
+    - [ ] 3.3. Define Project model (id, name, color, userId, deletedAt — soft delete)
+    - [ ] 3.4. Define Task model (id, title, projectId, userId, date, completed, deletedAt — soft delete)
+    - [ ] 3.5. Define PomodoroSession model (id, taskId, userId, startedAt, durationMinutes, deletedAt — soft delete)
+    - [ ] 3.6. Add indexes: [userId, date] on Task, [userId, startedAt] on PomodoroSession
+    - [ ] 3.7. Run Prisma migrations (connect to MySQL container)
+    - [ ] 3.8. Create prisma/seed.ts — seed system user (UUID, all data scoped to this user)
+    - [ ] 3.9. Add AUTH_TOKEN and SYSTEM_USER_ID to .env
 
 - [ ] 4. Build Express REST API routes
     - [ ] 4.1. POST /api/auth/token — validate predefined token, return user info
@@ -42,7 +44,7 @@
 - [ ] 5. Add backend middleware and testing
     - [ ] 5.1. Add CORS middleware (allow client origin)
     - [ ] 5.2. Add JSON body parsing middleware
-    - [ ] 5.3. Add auth middleware (extract user from token, attach to req.user)
+    - [ ] 5.3. Add auth middleware — validate Bearer token against AUTH_TOKEN env var, attach SYSTEM_USER_ID to req.userId
     - [ ] 5.4. Write basic API integration tests
 
 - [ ] 6. Set up React Router with routes
