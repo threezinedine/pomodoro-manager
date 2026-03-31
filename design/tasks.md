@@ -36,14 +36,14 @@
     - [x] 3.11. Add AUTH_TOKEN and DATABASE_URL to root .env (no server/.env)
 
 - [ ] 4. Build backend core infrastructure
-    - [ ] 4.1. Set up server/src/main.ts — Express app factory
-    - [ ] 4.2. Set up server/src/config/index.ts — dotenv loading, env var exports
-    - [ ] 4.3. Set up server/src/config/prisma.ts — Prisma client singleton
-    - [ ] 4.4. Omit CORS middleware — server runs only in Docker, nginx handles all routing
-    - [ ] 4.5. Set up server/src/core/middleware/errorHandler.ts — global error handler
-    - [ ] 4.6. Set up server/src/core/middleware/auth.ts — Bearer token validation, attach SYSTEM_USER_ID to req.userId
-    - [ ] 4.7. Set up server/src/core/errors/AppError.ts — custom error classes (NotFoundError, UnauthorizedError, ValidationError)
-    - [ ] 4.8. Set up server/src/core/utils/response.ts — res.success() and res.error() helpers
+    - [x] 4.1. Set up server/src/main.ts — Express app factory (shell, to be expanded)
+    - [x] 4.2. Set up server/src/config/index.ts — env var exports (PORT, AUTH_TOKEN, DATABASE_URL, SYSTEM_USER_ID)
+    - [x] 4.3. Set up server/src/config/prisma.ts — Prisma client singleton
+    - [x] 4.4. Omit CORS middleware — server runs only in Docker, nginx handles all routing
+    - [x] 4.5. Set up server/src/core/middleware/errorHandler.ts — global error handler
+    - [x] 4.6. Set up server/src/core/middleware/auth.ts — Bearer token validation, attach SYSTEM_USER_ID to req.userId
+    - [x] 4.7. Set up server/src/core/errors/AppError.ts — custom error classes (NotFoundError, UnauthorizedError, ValidationError)
+    - [x] 4.8. Set up server/src/core/utils/response.ts — success(), created(), noContent(), error() helpers
 
 - [ ] 5. Build backend auth feature
     - [ ] 5.1. Create server/src/features/auth/auth.routes.ts
