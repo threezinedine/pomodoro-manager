@@ -3,11 +3,9 @@ services:
     image: mysql:8.0
     container_name: pomodoro-mysql
     restart: unless-stopped
+    env_file: .env
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-rootpassword}
-      MYSQL_DATABASE: pomodoro
-      MYSQL_USER: pomodoro
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-pomodoro123}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-pomodoro}
     ports:
       - '3306:3306'
     volumes:
@@ -24,11 +22,12 @@ services:
     restart: unless-stopped
     working_dir: /app
     command: sh -c "npm install && npm run dev"
+    env_file: .env
     environment:
       NODE_ENV: development
-      PORT: 3000
-      DATABASE_URL: mysql://pomodoro:${MYSQL_PASSWORD:-pomodoro123}@mysql:3306/pomodoro
-      AUTH_TOKEN: ${AUTH_TOKEN:-changeme}
+      PORT: ${SERVER_PORT:-3000}
+      DATABASE_URL: ${DATABASE_URL}
+      AUTH_TOKEN: ${AUTH_TOKEN}
     volumes:
       - ./server/src:/app/src
       - ./server/package.json:/app/package.json
@@ -45,8 +44,9 @@ services:
     restart: unless-stopped
     working_dir: /app
     command: sh -c "npm install && npm run dev -- --host"
+    env_file: .env
     environment:
-      VITE_API_URL: http://localhost/api
+      VITE_API_URL: ${CLIENT_API_URL:-http://localhost:8080/api}
     volumes:
       - ./client/src:/app/src
       - ./client/index.html:/app/index.html

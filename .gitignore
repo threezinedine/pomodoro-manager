@@ -15,3 +15,10 @@ dist/
 *.tsbuildinfo
 *storybook.log
 storybook-static
+
+# Logs
+logs/
+*.log
+
+# Environment variables
+.env

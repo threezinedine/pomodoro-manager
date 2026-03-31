@@ -16,9 +16,9 @@
     - [x] 2.2. Install React Router v6 in client
     - [x] 2.3. Install Vitest and @testing-library/react in client
     - [x] 2.4. Install Storybook in client (@storybook/react, required for all components/)
-    - [ ] 2.5. Install Prisma in server (@prisma/client, prisma CLI)
-    - [ ] 2.6. Install Express, CORS, dotenv, helmet, compression in server
-    - [ ] 2.7. Install Jest and supertest in server
+    - [x] 2.5. Install Prisma in server (@prisma/client, prisma CLI) — Prisma 6.19.2 (MySQL)
+    - [x] 2.6. Install Express, dotenv, helmet, compression in server (no CORS — server only runs in Docker, nginx handles routing)
+    - [x] 2.7. Install Jest and supertest in server (Jest 30 + ts-jest)
     - [ ] 2.8. Install node-cron in server (for task auto-generation job)
     - [ ] 2.9. Add bell.mp3 sound file to client/public/sounds/ directory
 
@@ -33,13 +33,13 @@
     - [ ] 3.8. Add indexes: [userId, active] on TaskTemplate, [userId, date] on Task, [userId, startedAt] on PomodoroSession
     - [ ] 3.9. Run Prisma migrations (connect to MySQL container)
     - [ ] 3.10. Create prisma/seed.ts — seed system user (UUID, all data scoped to this user)
-    - [ ] 3.11. Add AUTH_TOKEN and DATABASE_URL to server/.env
+    - [ ] 3.11. Add AUTH_TOKEN and DATABASE_URL to root .env
 
 - [ ] 4. Build backend core infrastructure
     - [ ] 4.1. Set up server/src/main.ts — Express app factory
     - [ ] 4.2. Set up server/src/config/index.ts — dotenv loading, env var exports
     - [ ] 4.3. Set up server/src/config/prisma.ts — Prisma client singleton
-    - [ ] 4.4. Set up server/src/core/middleware/cors.ts — CORS configuration
+    - [ ] 4.4. Omit CORS middleware — server runs only in Docker, nginx handles all routing
     - [ ] 4.5. Set up server/src/core/middleware/errorHandler.ts — global error handler
     - [ ] 4.6. Set up server/src/core/middleware/auth.ts — Bearer token validation, attach SYSTEM_USER_ID to req.userId
     - [ ] 4.7. Set up server/src/core/errors/AppError.ts — custom error classes (NotFoundError, UnauthorizedError, ValidationError)
@@ -202,8 +202,8 @@
 
 - [ ] 22. Set up client Docker
     - [ ] 22.1. Configure client/Dockerfile — build with Vite, serve with nginx
-    - [ ] 22.2. Create client/nginx.conf — nginx config for SPA routing and static assets
-    - [ ] 22.3. Update docker-compose.yml to include client service with nginx
+    - [ ] 22.2. Create nginx/nginx.conf — reverse proxy config (api → server, /* → client)
+    - [ ] 22.3. Update docker-compose.dev.yml + docker-compose.prod.yml with nginx service
 
 - [ ] 23. Set up client Android packaging
     - [ ] 23.1. Run npx cap init (app name, app ID, web app directory: dist)

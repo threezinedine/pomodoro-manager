@@ -12,7 +12,7 @@ Run client build must not have any errors:
 cd client && npm run build
 ```
 
-Run the docker compose so that it at least can start without errors:
+Run the docker compose so that it at least can start without errors (if the docker is already running, try to get the logs to check for any errors):
 
 ```bash
 docker compose -f docker-compose.dev.yml up
