@@ -2,10 +2,10 @@ import 'dotenv/config';
 import express, { Application } from 'express';
 import helmet from 'helmet';
 import compression from 'compression';
-import { PORT } from './config/index.js';
-import { errorHandler } from './core/middleware/errorHandler.js';
+import { errorHandler } from './core/middleware/errorHandler';
+import { authRouter } from './features/auth/auth.routes';
 
-const app: Application = express();
+export const app: Application = express();
 
 // Security & performance middleware
 app.use(helmet());
@@ -17,16 +17,13 @@ app.get('/health', (_req, res) => {
   res.json({ status: 'ok' });
 });
 
-// Placeholder root — expanded by feature routes
+// API root
 app.get('/', (_req, res) => {
   res.json({ message: 'Pomodoro Manager API' });
 });
 
+// Feature routes
+app.use('/api/auth', authRouter());
+
 // Global error handler (must be last)
 app.use(errorHandler);
-
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
-
-export default app;

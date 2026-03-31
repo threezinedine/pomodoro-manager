@@ -45,12 +45,12 @@
     - [x] 4.7. Set up server/src/core/errors/AppError.ts — custom error classes (NotFoundError, UnauthorizedError, ValidationError)
     - [x] 4.8. Set up server/src/core/utils/response.ts — success(), created(), noContent(), error() helpers
 
-- [ ] 5. Build backend auth feature
-    - [ ] 5.1. Create server/src/features/auth/auth.routes.ts
-    - [ ] 5.2. Create server/src/features/auth/auth.controller.ts
-    - [ ] 5.3. Create server/src/features/auth/auth.service.ts — validate AUTH_TOKEN from env
-    - [ ] 5.4. Create server/src/features/auth/auth.test.ts — unit tests for token validation
-    - [ ] 5.5. Write basic API integration tests for auth
+- [x] 5. Build backend auth feature
+    - [x] 5.1. Create server/src/features/auth/auth.routes.ts
+    - [x] 5.2. Create server/src/features/auth/auth.controller.ts
+    - [x] 5.3. Create server/src/features/auth/auth.service.ts — validate AUTH_TOKEN from env
+    - [x] 5.4. Create server/src/features/auth/auth.test.ts — unit tests for token validation
+    - [x] 5.5. Write basic API integration tests for auth
 
 - [ ] 6. Build backend tasks feature
     - [ ] 6.1. Create server/src/features/tasks/tasks.routes.ts

@@ -1,6 +1,6 @@
 import type { Request, Response, NextFunction } from 'express';
-import { UnauthorizedError } from '../errors/AppError.js';
-import { AUTH_TOKEN, SYSTEM_USER_ID } from '../../config/index.js';
+import { UnauthorizedError } from '../errors/AppError';
+import { AUTH_TOKEN, SYSTEM_USER_ID } from '../../config/index';
 
 export interface AuthenticatedRequest extends Request {
   userId: string;
