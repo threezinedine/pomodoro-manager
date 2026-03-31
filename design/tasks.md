@@ -23,17 +23,17 @@
     - [ ] 2.9. Add bell.mp3 sound file to client/public/sounds/ directory
 
 - [ ] 3. Set up database and Prisma schema
-    - [ ] 3.1. Initialize Prisma with MySQL (update schema provider to mysql)
-    - [ ] 3.2. Define User model (id, createdAt — reserved for future, no deletedAt)
-    - [ ] 3.3. Define TaskTemplate model (id, title, description, taskType, repeatRule, repeatDays, timeOfDay, officeHours, active, userId, createdAt, deletedAt)
-    - [ ] 3.4. Define Task model (id, title, taskType, taskTemplateId, userId, date, taskStatus, createdAt, updatedAt, deletedAt)
-    - [ ] 3.5. Define TaskTag model (id, name, color, userId, createdAt, deletedAt)
-    - [ ] 3.6. Define TaskTagOnTask join model (taskId, tagId — composite PK)
-    - [ ] 3.7. Define PomodoroSession model (id, taskId, userId, taskType, plannedMinutes, actualMinutes, startedAt, endedAt, status, createdAt, deletedAt)
-    - [ ] 3.8. Add indexes: [userId, active] on TaskTemplate, [userId, date] on Task, [userId, startedAt] on PomodoroSession
-    - [ ] 3.9. Run Prisma migrations (connect to MySQL container)
-    - [ ] 3.10. Create prisma/seed.ts — seed system user (UUID, all data scoped to this user)
-    - [ ] 3.11. Add AUTH_TOKEN and DATABASE_URL to root .env
+    - [x] 3.1. Initialize Prisma with MySQL (schema provider = mysql)
+    - [x] 3.2. Define User model (id, createdAt — reserved for future, no deletedAt)
+    - [x] 3.3. Define TaskTemplate model (id, title, description, taskType, repeatRule, repeatDays, timeOfDay, officeHours, active, userId, createdAt, deletedAt)
+    - [x] 3.4. Define Task model (id, title, taskType, taskTemplateId, userId, date, taskStatus, createdAt, updatedAt, deletedAt)
+    - [x] 3.5. Define TaskTag model (id, name, color, userId, createdAt, deletedAt)
+    - [x] 3.6. Define TaskTagOnTask join model (taskId, tagId — composite PK)
+    - [x] 3.7. Define PomodoroSession model (id, taskId, userId, taskType, plannedMinutes, actualMinutes, startedAt, endedAt, status, createdAt, deletedAt)
+    - [x] 3.8. Add indexes: [userId, active] on TaskTemplate, [userId, date] on Task, [userId, startedAt] on PomodoroSession
+    - [x] 3.9. Run Prisma db push (connect to MySQL container) — no migrations folder, server self-migrates on startup
+    - [x] 3.10. Create prisma/seed.ts — seed system user (UUID, all data scoped to this user)
+    - [x] 3.11. Add AUTH_TOKEN and DATABASE_URL to root .env (no server/.env)
 
 - [ ] 4. Build backend core infrastructure
     - [ ] 4.1. Set up server/src/main.ts — Express app factory

@@ -1,11 +1,128 @@
 // This is your Prisma schema file
 
 generator client {
-  provider = "prisma-client"
-  output   = "../src/generated/prisma"
+  provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+
+  taskTemplates TaskTemplate[]
+  tasks        Task[]
+  tags         TaskTag[]
+  sessions     PomodoroSession[]
+
+  @@map("users")
+}
+
+// ──────────────────────────────────────────────
+// TaskTemplate — defines a recurring pattern
+// ──────────────────────────────────────────────
+model TaskTemplate {
+  id          String    @id @default(uuid())
+  title       String
+  description String?
+  taskType    String    // "POMODORO" | "OFFICE" | "MEETING" | "FOCUS" | "OTHER"
+  repeatRule  String    // "ONCE" | "DAILY" | "WEEKDAYS" | "WEEKLY" | "CUSTOM"
+  repeatDays  Json?     // WEEKLY: ["mon","wed","fri"]; CUSTOM: ["15","20"]
+  timeOfDay   String?   // "HH:mm" for display / notifications
+  officeHours Json?     // { start: "09:00", end: "17:00" } for OFFICE type
+  active      Boolean   @default(true)
+  userId      String
+  createdAt   DateTime  @default(now())
+  deletedAt   DateTime?
+
+  user  User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tasks Task[]
+
+  @@index([userId, active])
+  @@index([userId])
+  @@map("task_templates")
+}
+
+// ──────────────────────────────────────────────
+// Task — a concrete task instance on a date
+// ──────────────────────────────────────────────
+model Task {
+  id             String    @id @default(uuid())
+  title          String
+  taskType       String    // mirrors TaskTemplate.taskType; can be overridden per-instance
+  taskTemplateId String?
+  userId         String
+  date           DateTime  @db.Date // YYYY-MM-DD, time component ignored
+  taskStatus     String    @default("PENDING") // "PENDING" | "COMPLETED" | "CANCELLED"
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  deletedAt      DateTime?
+
+  user     User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  template TaskTemplate?   @relation(fields: [taskTemplateId], references: [id], onDelete: SetNull)
+  tags     TaskTagOnTask[]
+  sessions PomodoroSession[]
+
+  @@index([userId, date])
+  @@index([userId])
+  @@map("tasks")
+}
+
+// ──────────────────────────────────────────────
+// TaskTag — reusable labels for tasks
+// ──────────────────────────────────────────────
+model TaskTag {
+  id        String    @id @default(uuid())
+  name      String
+  color     String    @default("#6366f1") // hex color for calendar dots
+  userId    String
+  createdAt DateTime  @default(now())
+  deletedAt DateTime?
+
+  user  User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tasks TaskTagOnTask[]
+
+  @@index([userId])
+  @@map("task_tags")
+}
+
+// ──────────────────────────────────────────────
+// TaskTagOnTask — many-to-many join
+// ──────────────────────────────────────────────
+model TaskTagOnTask {
+  taskId String
+  tagId  String
+
+  task Task    @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  tag  TaskTag @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([taskId, tagId])
+  @@map("task_tags_on_tasks")
+}
+
+// ──────────────────────────────────────────────
+// PomodoroSession — one timer/stopped-time run on a task
+// ──────────────────────────────────────────────
+model PomodoroSession {
+  id             String    @id @default(uuid())
+  taskId         String
+  userId         String
+  taskType       String    // mirrors Task.taskType; used for analytics and display
+  plannedMinutes Int?      // null for OFFICE/MEETING; set for POMODORO/FOCUS/OTHER
+  actualMinutes  Int?      // null = session in progress; set on complete/reset
+  startedAt      DateTime  @db.DateTime
+  endedAt        DateTime? @db.DateTime // null = in progress
+  status         String    @default("RUNNING") // "RUNNING" | "COMPLETED" | "RESET"
+  createdAt      DateTime  @default(now())
+  deletedAt      DateTime?
+
+  user User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  task Task  @relation(fields: [taskId], references: [id], onDelete: Cascade)
+
+  @@index([userId, startedAt])
+  @@index([taskId])
+  @@map("pomodoro_sessions")
 }
