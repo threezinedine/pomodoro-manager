@@ -3,12 +3,12 @@
     - [x] 1.2. Initialize client: React 18 + Vite + TypeScript project
     - [x] 1.3. Set up CSS Modules + SCSS in client (no Tailwind)
     - [ ] 1.4. Install and configure Capacitor (android platform)
-    - [ ] 1.5. Set up Docker environment (Docker and Docker Compose installed locally)
-    - [ ] 1.6. Create docker-compose.yml — services: server (Node.js), client (nginx), mysql (official image)
-    - [ ] 1.7. Create server/Dockerfile — multi-stage build (build + production stage)
-    - [ ] 1.8. Create server/.dockerignore — exclude node_modules, dist, prisma/migrations
-    - [ ] 1.9. Create client/Dockerfile — build stage with Vite, serve with nginx (production stage)
-    - [ ] 1.10. Create client/.dockerignore — exclude node_modules, dist
+    - [x] 1.5. Set up Docker environment (Docker and Docker Compose installed locally)
+    - [x] 1.6. Create docker-compose.dev.yml + docker-compose.prod.yml — nginx proxy + server + client + mysql
+    - [x] 1.7. Create server/Dockerfile — multi-stage build (build + production stage)
+    - [x] 1.8. Create server/.dockerignore — exclude node_modules, dist, .env, logs
+    - [x] 1.9. Create client/Dockerfile — build with Vite, serve with nginx (production stage)
+    - [x] 1.10. Create client/.dockerignore — exclude node_modules, dist, .env, logs
     - [ ] 1.11. Verify shell project builds and Android APK generates
 
 - [ ] 2. Install project dependencies

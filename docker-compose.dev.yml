@@ -1,0 +1,75 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: pomodoro-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-rootpassword}
+      MYSQL_DATABASE: pomodoro
+      MYSQL_USER: pomodoro
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-pomodoro123}
+    ports:
+      - '3306:3306'
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ['CMD', 'mysqladmin', 'ping', '-h', 'localhost']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  server:
+    image: node:20-alpine
+    container_name: pomodoro-server
+    restart: unless-stopped
+    working_dir: /app
+    command: sh -c "npm install && npm run dev"
+    environment:
+      NODE_ENV: development
+      PORT: 3000
+      DATABASE_URL: mysql://pomodoro:${MYSQL_PASSWORD:-pomodoro123}@mysql:3306/pomodoro
+      AUTH_TOKEN: ${AUTH_TOKEN:-changeme}
+    volumes:
+      - ./server/src:/app/src
+      - ./server/package.json:/app/package.json
+      - ./server/tsconfig.json:/app/tsconfig.json
+    ports:
+      - '3000:3000'
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  client:
+    image: node:20-alpine
+    container_name: pomodoro-client
+    restart: unless-stopped
+    working_dir: /app
+    command: sh -c "npm install && npm run dev -- --host"
+    environment:
+      VITE_API_URL: http://localhost/api
+    volumes:
+      - ./client/src:/app/src
+      - ./client/index.html:/app/index.html
+      - ./client/package.json:/app/package.json
+      - ./client/vite.config.ts:/app/vite.config.ts
+      - ./client/tsconfig.json:/app/tsconfig.json
+      - ./client/tsconfig.node.json:/app/tsconfig.node.json
+    ports:
+      - '5173:5173'
+    depends_on:
+      - server
+
+  nginx:
+    image: nginx:1.25-alpine
+    container_name: pomodoro-nginx
+    restart: unless-stopped
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - '8080:80'
+    depends_on:
+      - server
+      - client
+
+volumes:
+  mysql_data:
