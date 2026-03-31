@@ -13,3 +13,5 @@ wheels/
 node_modules/
 dist/
 *.tsbuildinfo
+*storybook.log
+storybook-static

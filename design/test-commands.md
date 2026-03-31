@@ -17,3 +17,15 @@ Run the docker compose so that it at least can start without errors:
 ```bash
 docker compose -f docker-compose.dev.yml up
 ```
+
+The storybook MUST be built without errors:
+
+```bash
+cd client && npm run build-storybook
+```
+
+The client tests MUST be passed all:
+
+```bash
+cd client && npm run test
+```

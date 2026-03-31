@@ -12,10 +12,10 @@
     - [ ] 1.11. Verify shell project builds and Android APK generates
 
 - [ ] 2. Install project dependencies
-    - [ ] 2.1. Install Zustand in client
-    - [ ] 2.2. Install React Router v6 in client
-    - [ ] 2.3. Install Vitest and @testing-library/react in client
-    - [ ] 2.4. Install Storybook in client (@storybook/react, required for all components/)
+    - [x] 2.1. Install Zustand in client
+    - [x] 2.2. Install React Router v6 in client
+    - [x] 2.3. Install Vitest and @testing-library/react in client
+    - [x] 2.4. Install Storybook in client (@storybook/react, required for all components/)
     - [ ] 2.5. Install Prisma in server (@prisma/client, prisma CLI)
     - [ ] 2.6. Install Express, CORS, dotenv, helmet, compression in server
     - [ ] 2.7. Install Jest and supertest in server
@@ -118,7 +118,7 @@
     - [ ] 11.9. Set up client/src/stories/ — Storybook configuration
 
 - [ ] 12. Build client components library (components/)
-    - [ ] 12.1. Build Button component (Button.tsx, Button.scss, Button.test.tsx, Button.stories.tsx, index.tsx)
+    - [x] 12.1. Build Button component (Button.tsx, Button.scss, Button.test.tsx, Button.stories.tsx, index.tsx)
     - [ ] 12.2. Build Badge component (task status badge — PENDING/COMPLETED/CANCELLED colors)
     - [ ] 12.3. Build Modal component
     - [ ] 12.4. Build Tooltip component (for session dot hover in calendar)
