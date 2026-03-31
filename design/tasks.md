@@ -1,6 +1,6 @@
 - [ ] 1. Initialize monorepo structure (`/client`, `/server` root-level folders)
-    - [ ] 1.1. Initialize server: Express + TypeScript project
-    - [ ] 1.2. Initialize client: React 18 + Vite + TypeScript project
+    - [x] 1.1. Initialize server: Express + TypeScript project
+    - [x] 1.2. Initialize client: React 18 + Vite + TypeScript project
     - [ ] 1.3. Set up CSS Modules + SCSS in client (no Tailwind)
     - [ ] 1.4. Install and configure Capacitor (android platform)
     - [ ] 1.5. Set up Docker environment (Docker and Docker Compose installed locally)

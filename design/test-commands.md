@@ -1,3 +1,13 @@
 # Test Commands
 
-Currently, there is no test command, you can add some test commands here which you want to be always run and passed in `/execute` command.
+Run server build must not have any errors:
+
+```bash
+cd server && npm run build
+```
+
+Run client build must not have any errors:
+
+```bash
+cd client && npm run build
+```
