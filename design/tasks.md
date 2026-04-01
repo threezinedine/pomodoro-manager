@@ -54,10 +54,19 @@
 
 - [x] 6b. Add Swagger UI API playground
     - [x] 6b.1. Install swagger-ui-express + swagger-jsdoc in server
-    - [x] 6b.2. Create server/src/openapi.yaml — OpenAPI 3.0 spec for all existing endpoints (auth, tasks, tags)
+    - [x] 6b.2. Create server/src/openapi.yaml — OpenAPI 3.0 spec for all existing endpoints (auth, tasks, tags, sessions)
     - [x] 6b.3. Create server/src/config/swagger.ts — load spec via js-yaml, configure servers (dev/prod)
     - [x] 6b.4. Wire /api/docs route in main.ts (before auth middleware for the docs route itself)
-    - [x] 6b.5. Update swagger spec with new endpoints as features are built (sessions: done)
+    - [x] 6b.5. Update swagger spec with new endpoints as features are built (sessions, templates)
+
+- [ ] 6c. Add WebSocket real-time session sync
+    - [ ] 6c.1. Install ws package in server
+    - [ ] 6c.2. Create server/src/ws/server.ts — WebSocket server, Bearer token auth, user rooms, ping/pong keepalive
+    - [ ] 6c.3. Create server/src/ws/broadcast.ts — broadcast(event, userId, payload) helper
+    - [ ] 6c.4. Wire WebSocket server in server-entry.ts (attach to same HTTP server as Express)
+    - [ ] 6c.5. Integrate broadcast calls into tasks service (start/pause/resume) and sessions service (complete/reset)
+    - [ ] 6c.6. Update openapi.yaml with WebSocket connection info and message protocol
+    - [ ] 6c.7. Write integration tests for WebSocket events
 
 - [ ] 6. Build backend tasks feature
     - [x] 6.1. Create server/src/features/tasks/tasks.routes.ts
