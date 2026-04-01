@@ -1,0 +1,611 @@
+openapi: 3.0.3
+info:
+  title: Pomodoro Manager API
+  version: 1.0.0
+  description: |
+    REST API for the Pomodoro Manager application.
+
+    All endpoints under `/api/*` (except `/api/auth/token` and `/api/docs`) require a Bearer token.
+    The token value is `changeme` (configured via `AUTH_TOKEN` in `.env`).
+
+    To authenticate: click the **Authorize** button below and enter: `Bearer changeme`
+
+servers:
+  - url: http://localhost:3000
+    description: Local development
+  - url: http://server:3000
+    description: Docker production
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    # ─── Shared ───────────────────────────────────────────────
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          example: NotFoundError
+        message:
+          type: string
+          example: Task not found
+
+    # ─── Auth ─────────────────────────────────────────────────
+    AuthRequest:
+      type: object
+      required: [token]
+      properties:
+        token:
+          type: string
+          description: The AUTH_TOKEN value from environment
+          example: changeme
+
+    AuthResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            token:
+              type: string
+              example: changeme
+            userId:
+              type: string
+              format: uuid
+              example: 00000000-0000-0000-0000-000000000001
+
+    # ─── Task ──────────────────────────────────────────────────
+    TaskStatus:
+      type: string
+      enum: [PENDING, COMPLETED, CANCELLED]
+      example: PENDING
+
+    TaskType:
+      type: string
+      enum: [POMODORO, OFFICE, MEETING, FOCUS, OTHER]
+      example: POMODORO
+
+    TaskTag:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          example: urgent
+        color:
+          type: string
+          example: '#ff0000'
+        userId:
+          type: string
+          format: uuid
+        createdAt:
+          type: string
+          format: date-time
+        deletedAt:
+          type: string
+          format: date-time
+          nullable: true
+
+    TaskTagOnTask:
+      type: object
+      properties:
+        taskId:
+          type: string
+          format: uuid
+        tagId:
+          type: string
+          format: uuid
+        tag:
+          $ref: '#/components/schemas/TaskTag'
+
+    Task:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        title:
+          type: string
+          example: Morning standup
+        taskType:
+          $ref: '#/components/schemas/TaskType'
+        taskTemplateId:
+          type: string
+          format: uuid
+          nullable: true
+          example: null
+        userId:
+          type: string
+          format: uuid
+        date:
+          type: string
+          format: date-time
+          description: Stored as full DateTime, time component should be ignored
+        taskStatus:
+          $ref: '#/components/schemas/TaskStatus'
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        deletedAt:
+          type: string
+          format: date-time
+          nullable: true
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/TaskTagOnTask'
+
+    CreateTaskRequest:
+      type: object
+      required: [title, taskType, date]
+      properties:
+        title:
+          type: string
+          example: Morning standup
+        taskType:
+          $ref: '#/components/schemas/TaskType'
+        date:
+          type: string
+          format: date
+          description: Date in YYYY-MM-DD format
+          example: '2026-04-01'
+        taskTemplateId:
+          type: string
+          format: uuid
+          nullable: true
+        tagIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: IDs of tags to attach to this task
+          example: ['550e8400-e29b-41d4-a716-446655440000']
+
+    UpdateTaskRequest:
+      type: object
+      properties:
+        title:
+          type: string
+        taskType:
+          $ref: '#/components/schemas/TaskType'
+        taskStatus:
+          $ref: '#/components/schemas/TaskStatus'
+        date:
+          type: string
+          format: date
+          example: '2026-04-02'
+
+    AddTagsRequest:
+      type: object
+      required: [tagIds]
+      properties:
+        tagIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+          example: ['550e8400-e29b-41d4-a716-446655440000']
+
+    # ─── Tag ───────────────────────────────────────────────────
+    CreateTagRequest:
+      type: object
+      required: [name]
+      properties:
+        name:
+          type: string
+          example: urgent
+        color:
+          type: string
+          example: '#ff0000'
+          description: Hex color string, defaults to #6366f1
+
+security:
+  - bearerAuth: []
+
+paths:
+  # ─── Auth ──────────────────────────────────────────────────
+  /api/auth/token:
+    post:
+      summary: Obtain an auth token
+      description: Validate the token against AUTH_TOKEN from environment. No authentication required.
+      tags: [Auth]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthRequest'
+      responses:
+        '200':
+          description: Token valid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '400':
+          description: Invalid token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security: []
+
+  # ─── Tasks ─────────────────────────────────────────────────
+  /api/tasks:
+    get:
+      summary: List tasks for a specific date
+      tags: [Tasks]
+      parameters:
+        - name: date
+          in: query
+          required: true
+          description: Date in YYYY-MM-DD format
+          schema:
+            type: string
+            format: date
+            example: '2026-04-01'
+      responses:
+        '200':
+          description: List of tasks
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Task'
+        '400':
+          description: Missing date query parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Missing or invalid Bearer token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    post:
+      summary: Create a new task
+      tags: [Tasks]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTaskRequest'
+      responses:
+        '201':
+          description: Task created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Task'
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Missing or invalid Bearer token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/tasks/{id}:
+    get:
+      summary: Get a single task by ID
+      tags: [Tasks]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Task found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Task'
+        '401':
+          description: Missing or invalid Bearer token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Task not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    put:
+      summary: Update a task
+      tags: [Tasks]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateTaskRequest'
+      responses:
+        '200':
+          description: Task updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Task'
+        '401':
+          description: Missing or invalid Bearer token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Task not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    delete:
+      summary: Soft-delete a task
+      description: Sets `deletedAt` to the current timestamp. The task will no longer appear in listings.
+      tags: [Tasks]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: Task deleted (soft delete)
+        '401':
+          description: Missing or invalid Bearer token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Task not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/tasks/{id}/cancel:
+    post:
+      summary: Cancel a task
+      description: Sets the task status to CANCELLED. Typically used for OFFICE-type tasks.
+      tags: [Tasks]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Task cancelled
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Task'
+        '401':
+          description: Missing or invalid Bearer token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Task not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/tasks/{id}/tags:
+    post:
+      summary: Add tags to a task
+      tags: [Tasks]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddTagsRequest'
+      responses:
+        '200':
+          description: Tags added
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Task'
+        '401':
+          description: Missing or invalid Bearer token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Task not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/tasks/{id}/tags/{tagId}:
+    delete:
+      summary: Remove a tag from a task
+      tags: [Tasks]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: tagId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Tag removed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Task'
+        '401':
+          description: Missing or invalid Bearer token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Task not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  # ─── Tags ──────────────────────────────────────────────────
+  /api/tags:
+    get:
+      summary: List all tags for the current user
+      tags: [Tags]
+      responses:
+        '200':
+          description: List of tags
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/TaskTag'
+        '401':
+          description: Missing or invalid Bearer token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    post:
+      summary: Create a new tag
+      tags: [Tags]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTagRequest'
+      responses:
+        '201':
+          description: Tag created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/TaskTag'
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Missing or invalid Bearer token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/tags/{id}:
+    delete:
+      summary: Soft-delete a tag
+      description: Sets `deletedAt` to the current timestamp. The tag will no longer appear in listings.
+      tags: [Tags]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: Tag deleted (soft delete)
+        '401':
+          description: Missing or invalid Bearer token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Tag not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'

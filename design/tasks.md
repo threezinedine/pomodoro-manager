@@ -52,11 +52,11 @@
     - [x] 5.4. Create server/src/features/auth/auth.test.ts — unit tests for token validation
     - [x] 5.5. Write basic API integration tests for auth
 
-- [ ] 6b. Add Swagger UI API playground
-    - [ ] 6b.1. Install swagger-ui-express + swagger-jsdoc in server
-    - [ ] 6b.2. Create server/src/openapi.yaml — OpenAPI 3.0 spec for all existing endpoints (auth, tasks, tags)
-    - [ ] 6b.3. Create server/src/config/swagger.ts — load spec, configure servers (dev/prod)
-    - [ ] 6b.4. Wire /api/docs route in main.ts (before auth middleware for the docs route itself)
+- [x] 6b. Add Swagger UI API playground
+    - [x] 6b.1. Install swagger-ui-express + swagger-jsdoc in server
+    - [x] 6b.2. Create server/src/openapi.yaml — OpenAPI 3.0 spec for all existing endpoints (auth, tasks, tags)
+    - [x] 6b.3. Create server/src/config/swagger.ts — load spec via js-yaml, configure servers (dev/prod)
+    - [x] 6b.4. Wire /api/docs route in main.ts (before auth middleware for the docs route itself)
     - [ ] 6b.5. Update swagger spec with new endpoints as features are built (sessions, templates)
 
 - [ ] 6. Build backend tasks feature
