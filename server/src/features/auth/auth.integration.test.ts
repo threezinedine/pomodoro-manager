@@ -48,8 +48,8 @@ describe('auth integration', () => {
     expect(res.body.error).toBe('UnauthorizedError');
   });
 
-  it('GET /health — returns 200 without auth', async () => {
-    const res = await request(app).get('/health').expect(200);
+  it('GET /api/health — returns 200 without auth', async () => {
+    const res = await request(app).get('/api/health').expect(200);
     expect(res.body).toEqual({ status: 'ok' });
   });
 });

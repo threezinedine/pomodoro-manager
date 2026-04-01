@@ -196,6 +196,32 @@ components:
             format: uuid
           example: ['550e8400-e29b-41d4-a716-446655440000']
 
+    StartSessionRequest:
+      type: object
+      required: [plannedMinutes]
+      properties:
+        plannedMinutes:
+          type: integer
+          description: Planned duration in minutes
+          example: 25
+
+    PauseSessionRequest:
+      type: object
+      required: [actualMinutes]
+      properties:
+        actualMinutes:
+          type: integer
+          description: Actual elapsed minutes
+          example: 10
+
+    TaskSessionResponse:
+      type: object
+      properties:
+        task:
+          $ref: '#/components/schemas/Task'
+        session:
+          $ref: '#/components/schemas/PomodoroSession'
+
     # ─── Tag ───────────────────────────────────────────────────
     CreateTagRequest:
       type: object
@@ -207,7 +233,79 @@ components:
         color:
           type: string
           example: '#ff0000'
-          description: Hex color string, defaults to #6366f1
+
+    # ─── Session ───────────────────────────────────────────────
+    PomodoroSession:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        taskId:
+          type: string
+          format: uuid
+        userId:
+          type: string
+          format: uuid
+        taskType:
+          $ref: '#/components/schemas/TaskType'
+        plannedMinutes:
+          type: integer
+          nullable: true
+          example: 25
+        actualMinutes:
+          type: integer
+          nullable: true
+          example: 23
+        startedAt:
+          type: string
+          format: date-time
+        endedAt:
+          type: string
+          format: date-time
+          nullable: true
+        status:
+          type: string
+          enum: [RUNNING, COMPLETED, RESET]
+          example: RUNNING
+        createdAt:
+          type: string
+          format: date-time
+        deletedAt:
+          type: string
+          format: date-time
+          nullable: true
+
+    CreateSessionRequest:
+      type: object
+      required: [taskId, taskType]
+      properties:
+        taskId:
+          type: string
+          format: uuid
+          example: '550e8400-e29b-41d4-a716-446655440000'
+        taskType:
+          $ref: '#/components/schemas/TaskType'
+        plannedMinutes:
+          type: integer
+          description: Planned duration in minutes (e.g. 25 for a Pomodoro)
+          example: 25
+
+    ResetSessionRequest:
+      type: object
+      properties:
+        actualMinutes:
+          type: integer
+          description: Actual elapsed minutes
+          example: 12
+
+    CompleteSessionRequest:
+      type: object
+      properties:
+        plannedMinutes:
+          type: integer
+          description: Planned duration (defaults to 25 if not provided)
+          example: 25
 
 security:
   - bearerAuth: []
@@ -446,6 +544,145 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 
+  /api/tasks/{id}/start:
+    post:
+      summary: Start a Pomodoro session
+      description: |
+        Creates a RUNNING session for this task.
+        Only valid for `taskType: POMODORO` tasks.
+        Returns `{ task, session }`.
+      tags: [Tasks]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StartSessionRequest'
+      responses:
+        '201':
+          description: Session started
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskSessionResponse'
+        '400':
+          description: Task is not a POMODORO type
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Missing or invalid Bearer token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Task not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/tasks/{id}/pause:
+    post:
+      summary: Pause a Pomodoro session
+      description: |
+        Completes the currently RUNNING session with `actualMinutes = elapsed`.
+        Status becomes `COMPLETED`. Returns `{ task, session }`.
+      tags: [Tasks]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PauseSessionRequest'
+      responses:
+        '200':
+          description: Session paused
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskSessionResponse'
+        '400':
+          description: Task is not a POMODORO type
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Missing or invalid Bearer token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Task not found or no active session
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/tasks/{id}/resume:
+    post:
+      summary: Resume a Pomodoro session
+      description: |
+        Creates a new RUNNING session for this task.
+        Only valid for `taskType: POMODORO` tasks. Returns `{ task, session }`.
+      tags: [Tasks]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StartSessionRequest'
+      responses:
+        '201':
+          description: New session started
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskSessionResponse'
+        '400':
+          description: Task is not a POMODORO type
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Missing or invalid Bearer token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Task not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
   /api/tasks/{id}/tags:
     post:
       summary: Add tags to a task
@@ -605,6 +842,168 @@ paths:
                 $ref: '#/components/schemas/Error'
         '404':
           description: Tag not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  # ─── Sessions ───────────────────────────────────────────────
+  # Sessions are created via POST /api/tasks/{id}/start, /pause, /resume
+  # This endpoint is for listing and managing existing sessions
+  /api/sessions:
+    get:
+      summary: List sessions
+      description: |
+        Returns sessions filtered by date range or task ID.
+        If neither `from`/`to` nor `taskId` is provided, returns today's sessions.
+      tags: [Sessions]
+      parameters:
+        - name: from
+          in: query
+          description: Start date (YYYY-MM-DD)
+          schema:
+            type: string
+            format: date
+            example: '2026-04-01'
+        - name: to
+          in: query
+          description: End date (YYYY-MM-DD)
+          schema:
+            type: string
+            format: date
+            example: '2026-04-01'
+        - name: taskId
+          in: query
+          description: Filter by task ID
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: List of sessions
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/PomodoroSession'
+        '401':
+          description: Missing or invalid Bearer token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/sessions/{id}/reset:
+    put:
+      summary: End a session as RESET
+      description: |
+        Marks the session as RESET (timer was stopped before completing).
+        Sets `actualMinutes` to the elapsed time and `endedAt` to now.
+      tags: [Sessions]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResetSessionRequest'
+      responses:
+        '200':
+          description: Session reset
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/PomodoroSession'
+        '401':
+          description: Missing or invalid Bearer token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Session not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/sessions/{id}/complete:
+    put:
+      summary: End a session as COMPLETED
+      description: |
+        Marks the session as COMPLETED (timer ran to completion).
+        Sets `actualMinutes` to `plannedMinutes` and `endedAt` to now.
+      tags: [Sessions]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompleteSessionRequest'
+      responses:
+        '200':
+          description: Session completed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/PomodoroSession'
+        '401':
+          description: Missing or invalid Bearer token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Session not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/sessions/{id}:
+    delete:
+      summary: Soft-delete a session
+      description: Sets `deletedAt` to the current timestamp.
+      tags: [Sessions]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: Session deleted (soft delete)
+        '401':
+          description: Missing or invalid Bearer token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Session not found
           content:
             application/json:
               schema:

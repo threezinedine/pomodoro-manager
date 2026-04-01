@@ -57,7 +57,7 @@
     - [x] 6b.2. Create server/src/openapi.yaml — OpenAPI 3.0 spec for all existing endpoints (auth, tasks, tags)
     - [x] 6b.3. Create server/src/config/swagger.ts — load spec via js-yaml, configure servers (dev/prod)
     - [x] 6b.4. Wire /api/docs route in main.ts (before auth middleware for the docs route itself)
-    - [ ] 6b.5. Update swagger spec with new endpoints as features are built (sessions, templates)
+    - [x] 6b.5. Update swagger spec with new endpoints as features are built (sessions: done)
 
 - [ ] 6. Build backend tasks feature
     - [x] 6.1. Create server/src/features/tasks/tasks.routes.ts
@@ -73,18 +73,18 @@
     - [x] 6.11. Implement DELETE /api/tasks/:id/tags/:tagId — remove tag from task
     - [x] 6.12. Create server/src/features/tasks/tasks.test.ts
 
-- [ ] 7. Build backend sessions feature
-    - [ ] 7.1. Create server/src/features/sessions/sessions.routes.ts
-    - [ ] 7.2. Create server/src/features/sessions/sessions.controller.ts
-    - [ ] 7.3. Create server/src/features/sessions/sessions.service.ts
-    - [ ] 7.4. Create server/src/features/sessions/sessions.repository.ts
-    - [ ] 7.5. Implement POST /api/sessions — create PomodoroSession (status: RUNNING)
-    - [ ] 7.6. Implement PUT /api/sessions/:id/reset — end session (status: RESET, actualMinutes = elapsed, endedAt = now)
-    - [ ] 7.7. Implement PUT /api/sessions/:id/complete — end session (status: COMPLETED, actualMinutes = plannedMinutes)
-    - [ ] 7.8. Implement GET /api/sessions?from=&to= — list sessions in date range for calendar
-    - [ ] 7.9. Implement GET /api/sessions?taskId= — list all sessions for a task (for analytics)
-    - [ ] 7.10. Implement DELETE /api/sessions/:id — soft delete session
-    - [ ] 7.11. Create server/src/features/sessions/sessions.test.ts
+- [x] 7. Build backend sessions feature
+    - [x] 7.1. Create server/src/features/sessions/sessions.routes.ts
+    - [x] 7.2. Create server/src/features/sessions/sessions.controller.ts
+    - [x] 7.3. Create server/src/features/sessions/sessions.service.ts
+    - [x] 7.4. Create server/src/features/sessions/sessions.repository.ts
+    - [x] 7.5. Implement POST /api/sessions — create PomodoroSession (status: RUNNING)
+    - [x] 7.6. Implement PUT /api/sessions/:id/reset — end session (status: RESET, actualMinutes = elapsed, endedAt = now)
+    - [x] 7.7. Implement PUT /api/sessions/:id/complete — end session (status: COMPLETED, actualMinutes = plannedMinutes)
+    - [x] 7.8. Implement GET /api/sessions?from=&to= — list sessions in date range for calendar
+    - [x] 7.9. Implement GET /api/sessions?taskId= — list all sessions for a task (for analytics)
+    - [x] 7.10. Implement DELETE /api/sessions/:id — soft delete session
+    - [x] 7.11. Create server/src/features/sessions/sessions.test.ts
 
 - [ ] 8. Build backend templates feature
     - [ ] 8.1. Create server/src/features/templates/templates.routes.ts

@@ -1,5 +1,6 @@
 import { tasksRepository } from './tasks.repository';
-import { NotFoundError } from '../../core/errors/AppError';
+import { sessionsRepository } from '../sessions/sessions.repository';
+import { NotFoundError, ValidationError } from '../../core/errors/AppError';
 
 export const tasksService = {
   async listByDate(userId: string, date: Date) {
@@ -72,5 +73,50 @@ export const tasksService = {
     if (!existing) throw new NotFoundError('Task not found');
     await tasksRepository.removeTag(id, tagId);
     return tasksRepository.findById(id, userId);
+  },
+
+  async start(id: string, userId: string, plannedMinutes = 25) {
+    const task = await tasksRepository.findById(id, userId);
+    if (!task) throw new NotFoundError('Task not found');
+    if (task.taskType !== 'POMODORO') {
+      throw new ValidationError('Sessions can only be started for POMODORO tasks');
+    }
+    const session = await sessionsRepository.create({
+      taskId: id,
+      userId,
+      taskType: task.taskType,
+      plannedMinutes,
+      startedAt: new Date(),
+    });
+    return { task, session };
+  },
+
+  async pause(id: string, userId: string, actualMinutes: number) {
+    const task = await tasksRepository.findById(id, userId);
+    if (!task) throw new NotFoundError('Task not found');
+    if (task.taskType !== 'POMODORO') {
+      throw new ValidationError('Sessions can only be paused for POMODORO tasks');
+    }
+    const session = await sessionsRepository.findByTaskId(id, userId);
+    const active = session.find((s) => s.status === 'RUNNING');
+    if (!active) throw new NotFoundError('No active session to pause');
+    const completed = await sessionsRepository.complete(active.id, userId, actualMinutes);
+    return { task, session: completed };
+  },
+
+  async resume(id: string, userId: string, plannedMinutes = 25) {
+    const task = await tasksRepository.findById(id, userId);
+    if (!task) throw new NotFoundError('Task not found');
+    if (task.taskType !== 'POMODORO') {
+      throw new ValidationError('Sessions can only be resumed for POMODORO tasks');
+    }
+    const session = await sessionsRepository.create({
+      taskId: id,
+      userId,
+      taskType: task.taskType,
+      plannedMinutes,
+      startedAt: new Date(),
+    });
+    return { task, session };
   },
 };

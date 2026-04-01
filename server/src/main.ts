@@ -7,6 +7,7 @@ import { swaggerSpec, swaggerUi } from "./config/swagger";
 import { authRouter } from "./features/auth/auth.routes";
 import { tasksRouter } from "./features/tasks/tasks.routes";
 import { tagsRouter } from "./features/tags/tags.routes";
+import { sessionsRouter } from "./features/sessions/sessions.routes";
 
 export const app: Application = express();
 
@@ -40,6 +41,7 @@ app.use(
 app.use("/api/auth", authRouter());
 app.use("/api/tasks", tasksRouter());
 app.use("/api/tags", tagsRouter());
+app.use("/api/sessions", sessionsRouter());
 
 // Global error handler (must be last)
 app.use(errorHandler);
