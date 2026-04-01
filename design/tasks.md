@@ -52,19 +52,26 @@
     - [x] 5.4. Create server/src/features/auth/auth.test.ts — unit tests for token validation
     - [x] 5.5. Write basic API integration tests for auth
 
+- [ ] 6b. Add Swagger UI API playground
+    - [ ] 6b.1. Install swagger-ui-express + swagger-jsdoc in server
+    - [ ] 6b.2. Create server/src/openapi.yaml — OpenAPI 3.0 spec for all existing endpoints (auth, tasks, tags)
+    - [ ] 6b.3. Create server/src/config/swagger.ts — load spec, configure servers (dev/prod)
+    - [ ] 6b.4. Wire /api/docs route in main.ts (before auth middleware for the docs route itself)
+    - [ ] 6b.5. Update swagger spec with new endpoints as features are built (sessions, templates)
+
 - [ ] 6. Build backend tasks feature
-    - [ ] 6.1. Create server/src/features/tasks/tasks.routes.ts
-    - [ ] 6.2. Create server/src/features/tasks/tasks.controller.ts
-    - [ ] 6.3. Create server/src/features/tasks/tasks.service.ts
-    - [ ] 6.4. Create server/src/features/tasks/tasks.repository.ts
-    - [ ] 6.5. Implement GET /api/tasks?date=YYYY-MM-DD — list tasks for a specific day (include tags)
-    - [ ] 6.6. Implement POST /api/tasks — create task with { title, taskType, userId, date, taskTemplateId?, tagIds? }
-    - [ ] 6.7. Implement PUT /api/tasks/:id — update task (title, taskType, taskStatus, date)
-    - [ ] 6.8. Implement DELETE /api/tasks/:id — soft delete (deletedAt)
-    - [ ] 6.9. Implement POST /api/tasks/:id/cancel — set taskStatus to CANCELLED
-    - [ ] 6.10. Implement POST /api/tasks/:id/tags — add tags to task (TaskTagOnTask createMany)
-    - [ ] 6.11. Implement DELETE /api/tasks/:id/tags/:tagId — remove tag from task
-    - [ ] 6.12. Create server/src/features/tasks/tasks.test.ts
+    - [x] 6.1. Create server/src/features/tasks/tasks.routes.ts
+    - [x] 6.2. Create server/src/features/tasks/tasks.controller.ts
+    - [x] 6.3. Create server/src/features/tasks/tasks.service.ts
+    - [x] 6.4. Create server/src/features/tasks/tasks.repository.ts
+    - [x] 6.5. Implement GET /api/tasks?date=YYYY-MM-DD — list tasks for a specific day (include tags)
+    - [x] 6.6. Implement POST /api/tasks — create task with { title, taskType, userId, date, taskTemplateId?, tagIds? }
+    - [x] 6.7. Implement PUT /api/tasks/:id — update task (title, taskType, taskStatus, date)
+    - [x] 6.8. Implement DELETE /api/tasks/:id — soft delete (deletedAt)
+    - [x] 6.9. Implement POST /api/tasks/:id/cancel — set taskStatus to CANCELLED
+    - [x] 6.10. Implement POST /api/tasks/:id/tags — add tags to task (TaskTagOnTask upsert)
+    - [x] 6.11. Implement DELETE /api/tasks/:id/tags/:tagId — remove tag from task
+    - [x] 6.12. Create server/src/features/tasks/tasks.test.ts
 
 - [ ] 7. Build backend sessions feature
     - [ ] 7.1. Create server/src/features/sessions/sessions.routes.ts

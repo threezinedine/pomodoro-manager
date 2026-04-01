@@ -4,6 +4,8 @@ import helmet from 'helmet';
 import compression from 'compression';
 import { errorHandler } from './core/middleware/errorHandler';
 import { authRouter } from './features/auth/auth.routes';
+import { tasksRouter } from './features/tasks/tasks.routes';
+import { tagsRouter } from './features/tags/tags.routes';
 
 export const app: Application = express();
 
@@ -24,6 +26,8 @@ app.get('/', (_req, res) => {
 
 // Feature routes
 app.use('/api/auth', authRouter());
+app.use('/api/tasks', tasksRouter());
+app.use('/api/tags', tagsRouter());
 
 // Global error handler (must be last)
 app.use(errorHandler);
