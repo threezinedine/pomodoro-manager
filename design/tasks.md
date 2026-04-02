@@ -136,7 +136,7 @@
     - [x] 12.1. Build Button component (Button.tsx, Button.scss, Button.test.tsx, Button.stories.tsx, index.tsx)
     - [ ] 12.2. Build Badge component (task status badge — PENDING/COMPLETED/CANCELLED colors)
     - [x] 12.3. Build Modal component
-    - [ ] 12.4. Build Tooltip component (for session dot hover in calendar)
+    - [x] 12.4. Build Tooltip component (for session dot hover in calendar)
     - [x] 12.5. Build Spinner component
     - [ ] 12.6. Build Input component (text input with label and error state)
     - [ ] 12.7. Build Select component (for task type, tag selection)

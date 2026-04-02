@@ -1,0 +1,130 @@
+.wrapper {
+    position: relative;
+    display: inline-flex;
+}
+
+// ─── Tooltip ─────────────────────────────────────────────────────────────────
+
+.tooltip {
+    position: absolute;
+    z-index: 9000;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    white-space: nowrap;
+    pointer-events: none;
+    max-width: 240px;
+    word-break: break-word;
+
+    background: var(--bg-surface);
+    color: var(--text-primary);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow:
+        0 0 0 1px rgba(0, 0, 0, 0.2),
+        0 8px 24px rgba(0, 0, 0, 0.4),
+        0 2px 8px rgba(0, 0, 0, 0.3);
+
+    animation: fadeIn 150ms ease both;
+}
+
+// ─── Placement: top ────────────────────────────────────────────────────────
+
+.top {
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+
+    &::after {
+        content: '';
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        border: 6px solid transparent;
+        border-top-color: var(--bg-surface);
+    }
+}
+
+// ─── Placement: bottom ────────────────────────────────────────────────────
+
+.bottom {
+    top: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+
+    &::after {
+        content: '';
+        position: absolute;
+        bottom: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        border: 6px solid transparent;
+        border-bottom-color: var(--bg-surface);
+    }
+}
+
+// ─── Placement: left ────────────────────────────────────────────────────────
+
+.left {
+    right: calc(100% + 8px);
+    top: 50%;
+    transform: translateY(-50%);
+
+    &::after {
+        content: '';
+        position: absolute;
+        left: 100%;
+        top: 50%;
+        transform: translateY(-50%);
+        border: 6px solid transparent;
+        border-left-color: var(--bg-surface);
+    }
+}
+
+// ─── Placement: right ───────────────────────────────────────────────────────
+
+.right {
+    left: calc(100% + 8px);
+    top: 50%;
+    transform: translateY(-50%);
+
+    &::after {
+        content: '';
+        position: absolute;
+        right: 100%;
+        top: 50%;
+        transform: translateY(-50%);
+        border: 6px solid transparent;
+        border-right-color: var(--bg-surface);
+    }
+}
+
+// ─── Animation ─────────────────────────────────────────────────────────────
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+// Correct translate for left/right placements in animation
+.left {
+    animation-name: fadeInLeft;
+}
+
+@keyframes fadeInLeft {
+    from {
+        opacity: 0;
+        transform: translateY(-50%) translateX(-6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(-50%) translateX(0);
+    }
+}
