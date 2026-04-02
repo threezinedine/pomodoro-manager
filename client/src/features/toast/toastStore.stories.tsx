@@ -38,34 +38,36 @@ const ToastDemo: React.FC = () => {
         <Button
           variant="primary"
           size="sm"
-          onClick={() => toast("success", "Task saved successfully.")}
+          onClick={() => toast("success", "Task saved successfully.", 2000)}
         >
-          Success
+          Success (2000ms)
         </Button>
         <Button
           variant="danger"
           size="sm"
           onClick={() =>
-            toast("error", "Failed to save task. Please try again.")
+            toast("error", "Failed to save task. Please try again.", 4000)
           }
         >
-          Error
-        </Button>
-        <Button
-          variant="secondary"
-          size="sm"
-          onClick={() => toast("info", "Your session will end in 5 minutes.")}
-        >
-          Info
+          Error (4000ms)
         </Button>
         <Button
           variant="secondary"
           size="sm"
           onClick={() =>
-            toast("warning", "Low battery — connect your charger.")
+            toast("info", "Your session will end in 5 minutes.", 1000)
           }
         >
-          Warning
+          Info (1000ms)
+        </Button>
+        <Button
+          variant="secondary"
+          size="sm"
+          onClick={() =>
+            toast("warning", "Low battery — connect your charger.", 3000)
+          }
+        >
+          Warning (3000ms)
         </Button>
       </div>
     </div>
