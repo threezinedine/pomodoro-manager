@@ -137,7 +137,7 @@
     - [ ] 12.2. Build Badge component (task status badge — PENDING/COMPLETED/CANCELLED colors)
     - [x] 12.3. Build Modal component
     - [ ] 12.4. Build Tooltip component (for session dot hover in calendar)
-    - [ ] 12.5. Build Spinner component
+    - [x] 12.5. Build Spinner component
     - [ ] 12.6. Build Input component (text input with label and error state)
     - [ ] 12.7. Build Select component (for task type, tag selection)
     - [x] 12.8. Build Toast component (components/Toast/ — stateless, Toast.tsx, Toast.module.scss, Toast.test.tsx, Toast.stories.tsx, index.tsx)
