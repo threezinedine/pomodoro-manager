@@ -42,14 +42,17 @@ export const Button: React.FC<ButtonProps> = ({
     .filter(Boolean)
     .join(' ');
 
+  const isDisabled = disabled || loading;
+
   return (
     <button
       className={classes}
-      disabled={disabled || loading}
+      disabled={isDisabled}
       aria-busy={loading}
       data-variant={variant}
       data-size={size}
       data-fullwidth={fullWidth || undefined}
+      style={isDisabled ? { cursor: disabled ? 'not-allowed' : 'wait' } : undefined}
       {...rest}
     >
       {loading && (
