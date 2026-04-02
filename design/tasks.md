@@ -61,12 +61,13 @@
 
 - [ ] 6c. Add WebSocket real-time session sync
     - [ ] 6c.1. Install ws package in server
-    - [ ] 6c.2. Create server/src/ws/server.ts — WebSocket server, Bearer token auth, user rooms, ping/pong keepalive
-    - [ ] 6c.3. Create server/src/ws/broadcast.ts — broadcast(event, userId, payload) helper
+    - [ ] 6c.2. Create server/src/ws/server.ts — WS server: connect/auth, rooms, start/close message handlers, ping/pong keepalive
+    - [ ] 6c.3. Create server/src/ws/broadcast.ts — broadcast(userId, event, payload) helper
     - [ ] 6c.4. Wire WebSocket server in server-entry.ts (attach to same HTTP server as Express)
-    - [ ] 6c.5. Integrate broadcast calls into tasks service (start/pause/resume) and sessions service (complete/reset)
-    - [ ] 6c.6. Update openapi.yaml with WebSocket connection info and message protocol
-    - [ ] 6c.7. Write integration tests for WebSocket events
+    - [ ] 6c.5. WS session lifecycle: connect → auth → { start, taskId } → DB insert → disconnect/close → DB update (COMPLETED)
+    - [ ] 6c.6. On disconnect: auto-complete active session with actualMinutes = now - startedAt
+    - [ ] 6c.7. Update openapi.yaml with WebSocket connection info and message protocol
+    - [ ] 6c.8. Write integration tests for WebSocket events
 
 - [ ] 6. Build backend tasks feature
     - [x] 6.1. Create server/src/features/tasks/tasks.routes.ts
@@ -82,18 +83,16 @@
     - [x] 6.11. Implement DELETE /api/tasks/:id/tags/:tagId — remove tag from task
     - [x] 6.12. Create server/src/features/tasks/tasks.test.ts
 
-- [x] 7. Build backend sessions feature
+- [ ] 7. Build backend sessions feature
     - [x] 7.1. Create server/src/features/sessions/sessions.routes.ts
     - [x] 7.2. Create server/src/features/sessions/sessions.controller.ts
     - [x] 7.3. Create server/src/features/sessions/sessions.service.ts
     - [x] 7.4. Create server/src/features/sessions/sessions.repository.ts
-    - [x] 7.5. Implement POST /api/sessions — create PomodoroSession (status: RUNNING)
-    - [x] 7.6. Implement PUT /api/sessions/:id/reset — end session (status: RESET, actualMinutes = elapsed, endedAt = now)
-    - [x] 7.7. Implement PUT /api/sessions/:id/complete — end session (status: COMPLETED, actualMinutes = plannedMinutes)
-    - [x] 7.8. Implement GET /api/sessions?from=&to= — list sessions in date range for calendar
-    - [x] 7.9. Implement GET /api/sessions?taskId= — list all sessions for a task (for analytics)
-    - [x] 7.10. Implement DELETE /api/sessions/:id — soft delete session
-    - [x] 7.11. Create server/src/features/sessions/sessions.test.ts
+    - [x] 7.5. Implement GET /api/sessions?from=&to= — list sessions in date range for calendar
+    - [x] 7.6. Implement GET /api/sessions?taskId= — list all sessions for a task (for analytics)
+    - [x] 7.7. Implement DELETE /api/sessions/:id — soft delete session
+    - [x] 7.8. Create server/src/features/sessions/sessions.test.ts
+    - [ ] 7.9. Remove REST session lifecycle endpoints (start/pause/resume/complete/reset) — replaced by WebSocket (task 6c)
 
 - [ ] 8. Build backend templates feature
     - [ ] 8.1. Create server/src/features/templates/templates.routes.ts
