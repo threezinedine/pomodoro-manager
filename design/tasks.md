@@ -135,7 +135,7 @@
 - [ ] 12. Build client components library (components/)
     - [x] 12.1. Build Button component (Button.tsx, Button.scss, Button.test.tsx, Button.stories.tsx, index.tsx)
     - [ ] 12.2. Build Badge component (task status badge — PENDING/COMPLETED/CANCELLED colors)
-    - [ ] 12.3. Build Modal component
+    - [x] 12.3. Build Modal component
     - [ ] 12.4. Build Tooltip component (for session dot hover in calendar)
     - [ ] 12.5. Build Spinner component
     - [ ] 12.6. Build Input component (text input with label and error state)
@@ -236,3 +236,9 @@
     - [ ] 24.4. Final dark-theme audit — check all components for contrast, readability, consistency
     - [ ] 24.5. Test on mobile viewport (Chrome DevTools) — sidebar, calendar, timer all usable
     - [ ] 24.6. Add .test.tsx and .stories.tsx to all components/ (as required by template)
+
+- [ ] 25. Code style & editor config
+    - [ ] 25.1. Add `.editorconfig` at project root — tab size 4, no tab chars, end-of-line = lf, charset = utf-8
+    - [ ] 25.2. Add ESLint + Prettier config to server — tabSize 4, single quotes, no semicolons
+    - [ ] 25.3. Add ESLint + Prettier config to client — tabSize 4, single quotes, no semicolons, react plugin
+    - [ ] 25.4. Re-format all existing source files to tabSize 4 (client & server)
