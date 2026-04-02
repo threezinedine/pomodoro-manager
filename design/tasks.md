@@ -124,7 +124,7 @@
 - [ ] 11. Set up client project structure
     - [ ] 11.1. Set up client/src/components/ — pure presentational components (Button, Badge, Modal, Tooltip, Spinner, Input, Select)
     - [ ] 11.2. Set up client/src/features/ — feature modules (auth/, timer/, tasks/, calendar/, templates/, tags/, stats/)
-    - [ ] 11.3. Set up client/src/pages/ — LoginPage/, DashboardPage/
+    - [x] 11.3. Set up client/src/pages/ — LoginPage/, DashboardPage/
     - [ ] 11.4. Set up client/src/layout/ — dashboard/ layout components
     - [ ] 11.5. Set up client/src/global/ — global.css, themes.css (CSS variables, .light/.dark classes)
     - [ ] 11.6. Set up client/src/services/ — apiClient.ts (Axios instance, auth interceptor)
@@ -145,8 +145,8 @@
     - [ ] 13.1. Create client/src/features/auth/services/authApi.ts — POST /api/auth/token
     - [ ] 13.2. Create client/src/features/auth/stores/authStore.ts — Zustand store: token, userId, login, logout
     - [ ] 13.3. Create client/src/features/auth/hooks/useAuth.ts — convenience hook
-    - [ ] 13.4. Build LoginPage (pages/LoginPage/) — token input, submit, error state
-    - [ ] 13.5. Guard /dashboard route — redirect to / if no valid token in localStorage
+    - [x] 13.4. Build LoginPage (pages/LoginPage/) — token input, submit, error state
+    - [x] 13.5. Guard /dashboard route — redirect to / if no valid token in localStorage
 
 - [ ] 14. Build client timer feature
     - [ ] 14.1. Create client/src/features/timer/stores/timerStore.ts — Zustand: isRunning, duration, remaining, start, pause, resume, reset, tick
