@@ -211,7 +211,7 @@
     - [ ] 20.6. Calendar scales down on mobile viewports
 
 - [ ] 21. Wire up browser notifications and audio chime
-    - [ ] 21.1. Build Toast feature (features/toast/ — Zustand store, ToastContainer, ToastViewport, useToast hook)
+    - [x] 21.1. Build Toast feature (features/toast/ — Zustand store, ToastContainer, ToastViewport, useToast hook)
     - [ ] 21.2. Request notification permission on first timer start
     - [ ] 21.3. Fire new Notification("Session complete!") when timer hits 0
     - [ ] 21.4. Play bell.mp3 via Web Audio API when timer hits 0

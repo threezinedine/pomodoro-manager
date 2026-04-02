@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { LoginPage } from './pages/LoginPage/LoginPage';
 import { DashboardPage } from './pages/DashboardPage/DashboardPage';
+import { ToastViewport } from './features/toast/components/ToastViewport';
 
 const AUTH_KEY = 'auth_token';
 
@@ -51,6 +52,7 @@ const App: React.FC = () => {
         />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
+      <ToastViewport />
     </BrowserRouter>
   );
 };
