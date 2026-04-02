@@ -125,12 +125,12 @@
     - [ ] 11.1. Set up client/src/components/ — pure presentational components (Button, Badge, Modal, Tooltip, Spinner, Input, Select)
     - [ ] 11.2. Set up client/src/features/ — feature modules (auth/, timer/, tasks/, calendar/, templates/, tags/, stats/)
     - [x] 11.3. Set up client/src/pages/ — LoginPage/, DashboardPage/
-    - [ ] 11.4. Set up client/src/layout/ — dashboard/ layout components
-    - [ ] 11.5. Set up client/src/global/ — global.css, themes.css (CSS variables, .light/.dark classes)
-    - [ ] 11.6. Set up client/src/services/ — apiClient.ts (Axios instance, auth interceptor)
-    - [ ] 11.7. Set up client/src/hooks/ — useNotification.ts, useAudio.ts
-    - [ ] 11.8. Set up client/src/utils/ — date.ts, time.ts (formatting helpers)
-    - [ ] 11.9. Set up client/src/stories/ — Storybook configuration
+    - [x] 11.4. Set up client/src/layout/ — dashboard/ layout components
+    - [x] 11.5. Set up client/src/global/ — global.css, themes.css (CSS variables, .light/.dark classes)
+    - [x] 11.6. Set up client/src/services/ — apiClient.ts (fetch-based, auth interceptor, HttpError)
+    - [x] 11.7. Set up client/src/hooks/ — useNotification.ts, useAudio.ts
+    - [x] 11.8. Set up client/src/utils/ — date.ts, time.ts (formatting helpers)
+    - [x] 11.9. Set up client/src/stories/ — Storybook configuration
 
 - [ ] 12. Build client components library (components/)
     - [x] 12.1. Build Button component (Button.tsx, Button.scss, Button.test.tsx, Button.stories.tsx, index.tsx)

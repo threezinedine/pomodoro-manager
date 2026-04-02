@@ -1,43 +1,18 @@
-.page {
+.sidebarPlaceholder {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
-  background: var(--bg-base);
-}
-
-.header {
-  display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: var(--spacing-md) var(--spacing-lg);
-  background: var(--bg-surface);
-  border-bottom: 1px solid var(--border-color);
-  flex-shrink: 0;
-}
-
-.headerLeft {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-sm);
-}
-
-.logoIcon {
-  font-size: 1.5rem;
-  line-height: 1;
-}
-
-.title {
-  font-size: 1.125rem;
-  font-weight: 700;
-  color: var(--color-accent);
+  justify-content: center;
+  height: 100%;
+  padding: var(--spacing-xl);
 }
 
 .main {
-  flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: var(--spacing-xl);
+  height: 100%;
+  min-height: calc(100vh - 64px);
 }
 
 .placeholder {

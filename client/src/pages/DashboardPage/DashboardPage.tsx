@@ -1,37 +1,28 @@
 import React from 'react';
-import { Button } from '../../components/Button';
+import { DashboardLayout } from '../../layout';
 import styles from './DashboardPage.module.scss';
 
-const AUTH_KEY = 'auth_token';
-
 export const DashboardPage: React.FC = () => {
-  const handleLogout = () => {
-    localStorage.removeItem(AUTH_KEY);
-    window.location.href = '/';
-  };
-
   return (
-    <div className={styles.page}>
-      <header className={styles.header}>
-        <div className={styles.headerLeft}>
-          <span className={styles.logoIcon} aria-hidden="true">🍅</span>
-          <h1 className={styles.title}>Pomodoro Manager</h1>
-        </div>
-        <Button variant="ghost" size="sm" onClick={handleLogout}>
-          Sign Out
-        </Button>
-      </header>
-
-      <main className={styles.main}>
-        <div className={styles.placeholder}>
-          <span className={styles.placeholderIcon} aria-hidden="true">📋</span>
-          <h2 className={styles.placeholderTitle}>Dashboard</h2>
+    <DashboardLayout
+      sidebar={
+        <div className={styles.sidebarPlaceholder}>
           <p className={styles.placeholderText}>
-            Dashboard components coming soon — calendar, timer, and task management will appear here.
+            Task panel — Timer, TaskList, and AddTaskForm coming soon.
           </p>
         </div>
-      </main>
-    </div>
+      }
+    >
+      <div className={styles.main}>
+        <div className={styles.placeholder}>
+          <span className={styles.placeholderIcon} aria-hidden="true">📋</span>
+          <h2 className={styles.placeholderTitle}>Calendar</h2>
+          <p className={styles.placeholderText}>
+            Calendar view coming soon — session history and task tracking will appear here.
+          </p>
+        </div>
+      </div>
+    </DashboardLayout>
   );
 };
 
