@@ -59,15 +59,15 @@
     - [x] 6b.4. Wire /api/docs route in main.ts (before auth middleware for the docs route itself)
     - [x] 6b.5. Update swagger spec with new endpoints as features are built (sessions, templates)
 
-- [ ] 6c. Add WebSocket real-time session sync
-    - [ ] 6c.1. Install ws package in server
-    - [ ] 6c.2. Create server/src/ws/server.ts — WS server: connect/auth, rooms, start/close message handlers, ping/pong keepalive
-    - [ ] 6c.3. Create server/src/ws/broadcast.ts — broadcast(userId, event, payload) helper
-    - [ ] 6c.4. Wire WebSocket server in server-entry.ts (attach to same HTTP server as Express)
-    - [ ] 6c.5. WS session lifecycle: connect → auth → { start, taskId } → DB insert → disconnect/close → DB update (COMPLETED)
-    - [ ] 6c.6. On disconnect: auto-complete active session with actualMinutes = now - startedAt
-    - [ ] 6c.7. Update openapi.yaml with WebSocket connection info and message protocol
-    - [ ] 6c.8. Write integration tests for WebSocket events
+- [x] 6c. Add WebSocket real-time session sync
+    - [x] 6c.1. Install ws package in server
+    - [x] 6c.2. Create server/src/ws/server.ts — WS server: connect/auth, rooms, start/close message handlers, JSON ping/pong heartbeat
+    - [x] 6c.3. Create server/src/ws/broadcast.ts — broadcast(userId, event, payload) helper
+    - [x] 6c.4. Wire WebSocket server in server-entry.ts (attach to same HTTP server as Express)
+    - [x] 6c.5. WS session lifecycle: connect → auth → { start, taskId } → DB insert → disconnect/close → DB update (COMPLETED)
+    - [x] 6c.6. On disconnect: auto-complete active session with actualMinutes = now - startedAt
+    - [x] 6c.7. Update openapi.yaml with WebSocket connection info and message protocol
+    - [x] 6c.8. Write integration tests for WebSocket events (12 tests: auth, start, close, disconnect, broadcast, heartbeat)
 
 - [ ] 6. Build backend tasks feature
     - [x] 6.1. Create server/src/features/tasks/tasks.routes.ts
@@ -83,7 +83,7 @@
     - [x] 6.11. Implement DELETE /api/tasks/:id/tags/:tagId — remove tag from task
     - [x] 6.12. Create server/src/features/tasks/tasks.test.ts
 
-- [ ] 7. Build backend sessions feature
+- [x] 7. Build backend sessions feature
     - [x] 7.1. Create server/src/features/sessions/sessions.routes.ts
     - [x] 7.2. Create server/src/features/sessions/sessions.controller.ts
     - [x] 7.3. Create server/src/features/sessions/sessions.service.ts
@@ -92,7 +92,7 @@
     - [x] 7.6. Implement GET /api/sessions?taskId= — list all sessions for a task (for analytics)
     - [x] 7.7. Implement DELETE /api/sessions/:id — soft delete session
     - [x] 7.8. Create server/src/features/sessions/sessions.test.ts
-    - [ ] 7.9. Remove REST session lifecycle endpoints (start/pause/resume/complete/reset) — replaced by WebSocket (task 6c)
+    - [x] 7.9. Session lifecycle moved to WebSocket (task 6c) — REST endpoints removed (start/pause/resume/complete/reset)
 
 - [ ] 8. Build backend templates feature
     - [ ] 8.1. Create server/src/features/templates/templates.routes.ts

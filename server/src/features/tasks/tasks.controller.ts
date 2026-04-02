@@ -71,25 +71,4 @@ export const tasksController = {
     const task = await tasksService.removeTag(req.params.id, userId, req.params.tagId);
     return success(res, task);
   }),
-
-  start: asyncHandler(async (req: Request, res: Response) => {
-    const { userId } = req as AuthenticatedRequest;
-    const { plannedMinutes } = req.body as { plannedMinutes?: number };
-    const result = await tasksService.start(req.params.id, userId, plannedMinutes);
-    return created(res, result);
-  }),
-
-  pause: asyncHandler(async (req: Request, res: Response) => {
-    const { userId } = req as AuthenticatedRequest;
-    const { actualMinutes } = req.body as { actualMinutes?: number };
-    const result = await tasksService.pause(req.params.id, userId, actualMinutes ?? 0);
-    return success(res, result);
-  }),
-
-  resume: asyncHandler(async (req: Request, res: Response) => {
-    const { userId } = req as AuthenticatedRequest;
-    const { plannedMinutes } = req.body as { plannedMinutes?: number };
-    const result = await tasksService.resume(req.params.id, userId, plannedMinutes);
-    return created(res, result);
-  }),
 };

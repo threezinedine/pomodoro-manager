@@ -7,8 +7,6 @@ export function sessionsRouter(): Router {
   router.use(authMiddleware);
 
   router.get('/', sessionsController.list);
-  router.put('/:id/reset', sessionsController.reset);
-  router.put('/:id/complete', sessionsController.complete);
   router.delete('/:id', sessionsController.remove);
 
   return router;
