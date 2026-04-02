@@ -139,7 +139,7 @@
     - [x] 12.4. Build Tooltip component (for session dot hover in calendar)
     - [x] 12.5. Build Spinner component
     - [ ] 12.6. Build Input component (text input with label and error state)
-    - [ ] 12.7. Build Select component (for task type, tag selection)
+    - [x] 12.7. Build Select component (for task type, tag selection)
     - [x] 12.8. Build Toast component (components/Toast/ — stateless, Toast.tsx, Toast.module.scss, Toast.test.tsx, Toast.stories.tsx, index.tsx)
 
 - [ ] 13. Build client auth feature

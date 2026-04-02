@@ -1,0 +1,185 @@
+// ─── Wrapper ─────────────────────────────────────────────────────────────────────
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  width: 100%;
+}
+
+// ─── Label ──────────────────────────────────────────────────────────────────────
+
+.label {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+  user-select: none;
+  letter-spacing: 0.01em;
+}
+
+.required {
+  color: var(--color-error);
+  margin-left: 2px;
+}
+
+// ─── Select wrapper ─────────────────────────────────────────────────────────────
+
+.selectWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.select {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 100%;
+  padding: 10px 36px 10px 14px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 0.9375rem;
+  line-height: 1.4;
+  cursor: pointer;
+  transition:
+    border-color var(--transition-fast),
+    background-color var(--transition-fast),
+    box-shadow var(--transition-fast);
+  // Prevent text inside native select from shrinking on Firefox
+  overflow: visible;
+
+  // Top-left shine strip
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.06) 0%,
+      transparent 60%
+    );
+    pointer-events: none;
+  }
+
+  // Hover
+  &:hover:not(:disabled) {
+    border-color: var(--color-accent);
+    background: var(--bg-surface-hover);
+  }
+
+  // Focus
+  &:focus-visible {
+    outline: none;
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.25);
+  }
+
+  // Disabled
+  &:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+    background: var(--bg-surface);
+  }
+
+  // Error state (data attribute driven)
+  &[data-error="true"] {
+    border-color: var(--color-error);
+    background: color-mix(in srgb, var(--color-error) 5%, var(--bg-surface));
+
+    &:focus-visible {
+      box-shadow: 0 0 0 3px rgba(244, 67, 54, 0.25);
+    }
+  }
+}
+
+// ─── Custom chevron ─────────────────────────────────────────────────────────────
+
+.chevron {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  pointer-events: none;
+  transition: color var(--transition-fast);
+
+  // Chevron colour changes when the wrapper is hovered
+  .selectWrapper:hover & {
+    color: var(--color-accent);
+  }
+}
+
+// ─── Error message ───────────────────────────────────────────────────────────────
+
+.error {
+  font-size: 0.75rem;
+  color: var(--color-error);
+  line-height: 1.4;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+
+  // Red dot indicator
+  &::before {
+    content: '';
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--color-error);
+    flex-shrink: 0;
+  }
+}
+
+// ─── Multiple select ────────────────────────────────────────────────────────────
+
+// When multiple=true the native select renders a tall box
+.select[multiple] {
+  padding-right: 14px;
+  min-height: 100px;
+  cursor: pointer;
+
+  // Stack options vertically
+  option {
+    padding: 6px 8px;
+  }
+
+  // Selected options get accent tint
+  option:checked {
+    background: color-mix(in srgb, var(--color-accent) 20%, var(--bg-surface));
+    color: var(--text-primary);
+    font-weight: 600;
+  }
+}
+
+// ─── Selected count badge (multiple mode) ────────────────────────────────────────
+
+.selectedCount {
+  font-size: 0.75rem;
+  color: var(--color-accent);
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+// ─── Disabled state ─────────────────────────────────────────────────────────────
+
+.disabled {
+  cursor: not-allowed;
+
+  .label {
+    opacity: 0.45;
+  }
+}
+
+// ─── Error state on wrapper ─────────────────────────────────────────────────────
+
+.hasError .select {
+  border-color: var(--color-error);
+}
