@@ -117,9 +117,9 @@
     - [ ] 9.7. Implement DELETE /api/tags/:id — soft delete tag
     - [ ] 9.8. Create server/src/features/tags/tags.test.ts
 
-- [ ] 10. Build backend health feature
-    - [ ] 10.1. Create server/src/features/health/health.routes.ts — GET /health
-    - [ ] 10.2. Wire up all feature routes in main.ts under /api prefix
+- [x] 10. Build backend health feature
+    - [x] 10.1. Create server/src/features/health/health.routes.ts — GET /api/health
+    - [x] 10.2. Wire up all feature routes in main.ts under /api prefix
 
 - [ ] 11. Set up client project structure
     - [ ] 11.1. Set up client/src/components/ — pure presentational components (Button, Badge, Modal, Tooltip, Spinner, Input, Select)

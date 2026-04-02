@@ -8,6 +8,7 @@ import { authRouter } from "./features/auth/auth.routes";
 import { tasksRouter } from "./features/tasks/tasks.routes";
 import { tagsRouter } from "./features/tags/tags.routes";
 import { sessionsRouter } from "./features/sessions/sessions.routes";
+import { healthRouter } from "./features/health/health.routes";
 
 export const app: Application = express();
 
@@ -17,9 +18,7 @@ app.use(compression());
 app.use(express.json());
 
 // Health check
-app.get("/api/health", (_req, res) => {
-  res.json({ status: "ok" });
-});
+app.use("/api/health", healthRouter());
 
 // API root
 app.get("/api", (_req, res) => {
