@@ -134,7 +134,7 @@
 
 - [ ] 12. Build client components library (components/)
     - [x] 12.1. Build Button component (Button.tsx, Button.scss, Button.test.tsx, Button.stories.tsx, index.tsx)
-    - [ ] 12.2. Build Badge component (task status badge — PENDING/COMPLETED/CANCELLED colors)
+    - [x] 12.2. Build Badge component (task status badge — PENDING/COMPLETED/CANCELLED colors)
     - [x] 12.3. Build Modal component
     - [x] 12.4. Build Tooltip component (for session dot hover in calendar)
     - [x] 12.5. Build Spinner component
