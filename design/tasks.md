@@ -140,6 +140,7 @@
     - [ ] 12.5. Build Spinner component
     - [ ] 12.6. Build Input component (text input with label and error state)
     - [ ] 12.7. Build Select component (for task type, tag selection)
+    - [ ] 12.8. Build Toast component (components/Toast/ — stateless, Toast.tsx, Toast.module.scss, Toast.test.tsx, Toast.stories.tsx, index.tsx)
 
 - [ ] 13. Build client auth feature
     - [ ] 13.1. Create client/src/features/auth/services/authApi.ts — POST /api/auth/token
@@ -210,10 +211,11 @@
     - [ ] 20.6. Calendar scales down on mobile viewports
 
 - [ ] 21. Wire up browser notifications and audio chime
-    - [ ] 21.1. Request notification permission on first timer start
-    - [ ] 21.2. Fire new Notification("Session complete!") when timer hits 0
-    - [ ] 21.3. Play bell.mp3 via Web Audio API when timer hits 0
-    - [ ] 21.4. Add timer sound toggle button (mute/unmute bell)
+    - [ ] 21.1. Build Toast feature (features/toast/ — Zustand store, ToastContainer, ToastViewport, useToast hook)
+    - [ ] 21.2. Request notification permission on first timer start
+    - [ ] 21.3. Fire new Notification("Session complete!") when timer hits 0
+    - [ ] 21.4. Play bell.mp3 via Web Audio API when timer hits 0
+    - [ ] 21.5. Add timer sound toggle button (mute/unmute bell)
 
 - [ ] 22. Set up client Docker
     - [ ] 22.1. Configure client/Dockerfile — build with Vite, serve with nginx
