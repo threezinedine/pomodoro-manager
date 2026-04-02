@@ -54,6 +54,9 @@
   --glow-success: 0 0 20px rgba(76, 175, 80, 0.35);
   --glow-error:   0 0 20px rgba(244, 67, 54, 0.35);
 
+  // Toast close button hover background
+  --toast-close-hover: rgba(255, 255, 255, 0.08);
+
   // Adaptive hover colours for secondary / ghost buttons
   --btn-hover-bg:      #2e2e2e;
   --btn-hover-stem:    #111;
@@ -95,4 +98,7 @@
   --btn-hover-stem:    #c8c8d0;
   --btn-hover-border:  #c8c8d0;
   --btn-hover-shadow:  0 6px 0 0 #c8c8d0, 0 10px 24px rgba(0, 0, 0, 0.12);
+
+  // Toast close button hover — semi-opaque dark so it's visible on white
+  --toast-close-hover: rgba(0, 0, 0, 0.08);
 }

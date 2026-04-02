@@ -140,7 +140,7 @@
     - [ ] 12.5. Build Spinner component
     - [ ] 12.6. Build Input component (text input with label and error state)
     - [ ] 12.7. Build Select component (for task type, tag selection)
-    - [ ] 12.8. Build Toast component (components/Toast/ — stateless, Toast.tsx, Toast.module.scss, Toast.test.tsx, Toast.stories.tsx, index.tsx)
+    - [x] 12.8. Build Toast component (components/Toast/ — stateless, Toast.tsx, Toast.module.scss, Toast.test.tsx, Toast.stories.tsx, index.tsx)
 
 - [ ] 13. Build client auth feature
     - [ ] 13.1. Create client/src/features/auth/services/authApi.ts — POST /api/auth/token
