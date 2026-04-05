@@ -210,6 +210,15 @@
     - [ ] 20.5. Wire up responsive behavior: sidebar collapses on mobile (bottom drawer)
     - [ ] 20.6. Calendar scales down on mobile viewports
 
+- [ ] 20b. Refactor Header to be stateless, create Navbar feature
+    - [x] 20b.1. Refactor layout/Header/Header.tsx — remove internal auth state, add onLogout, onToggleStats, onToggleSettings, isStatsOpen, isSettingsOpen props
+    - [x] 20b.2. Create features/navbar/stores/navbarStore.ts — Zustand: isStatsOpen, isSettingsOpen, toggleStats, toggleSettings, closeStats, closeSettings
+    - [x] 20b.3. Create features/navbar/components/Navbar/Navbar.tsx — wires Header, calls logout, reads navbarStore
+    - [x] 20b.4. Create Navbar.module.scss, Navbar.stories.tsx, Navbar.test.tsx, index.ts files
+    - [x] 20b.5. Update DashboardLayout to accept optional `header` slot (replaces default Header)
+    - [x] 20b.6. Update DashboardPage to use Navbar via DashboardLayout `header` prop
+    - [x] 20b.7. Move auth logic from features/navbar/ Navbar into navbarStore — isAuthenticated() reads localStorage, logout() handles clearing token and redirecting
+
 - [ ] 21. Wire up browser notifications and audio chime
     - [x] 21.1. Build Toast feature (features/toast/ — Zustand store, ToastContainer, ToastViewport, useToast hook)
     - [ ] 21.2. Request notification permission on first timer start

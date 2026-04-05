@@ -7,15 +7,22 @@ interface DashboardLayoutProps {
   sidebar: React.ReactNode;
   /** Main area content — typically CalendarView. */
   children: React.ReactNode;
+  /**
+   * Optional custom header to render instead of the default Header.
+   * When provided, the default Header is not rendered.
+   * Use this to pass a stateful Navbar component.
+   */
+  header?: React.ReactNode;
 }
 
 export const DashboardLayout: React.FC<DashboardLayoutProps> = ({
   sidebar,
   children,
+  header,
 }) => {
   return (
     <div className={styles.layout}>
-      <Header />
+      {header ?? <Header onLogout={() => {}} />}
       <div className={styles.body}>
         <aside className={styles.sidebar} aria-label="Task panel">
           {sidebar}

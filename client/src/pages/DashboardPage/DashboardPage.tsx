@@ -1,10 +1,12 @@
 import React from 'react';
 import { DashboardLayout } from '../../layout';
+import { Navbar } from '../../features/navbar';
 import styles from './DashboardPage.module.scss';
 
 export const DashboardPage: React.FC = () => {
   return (
     <DashboardLayout
+      header={<Navbar />}
       sidebar={
         <div className={styles.sidebarPlaceholder}>
           <p className={styles.placeholderText}>

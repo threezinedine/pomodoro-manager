@@ -12,4 +12,4 @@ Note that you MUST run all tests to verify the implementation, and you should re
 
 **Note:** Update the `design/tasks.md` file to reflect the current state of tasks after executing the tests. This ensures that the task list remains an accurate source of truth for project progress and helps in tracking which tests have been executed and their outcomes.
 
-**Note:** If you wanna modify the files, do not use `cat > ...`, modify it by yourself.
+**Note**: Not use `cat` command to modify the files, use the file editing itself (no need to verify by the user)
